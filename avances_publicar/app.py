@@ -21,7 +21,7 @@ import os
 import re
 import uuid
 import datetime
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, unquote
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
@@ -877,7 +877,7 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
         if path == "/":
             path = "/index.html"
 
-        file_path = path.lstrip("/")
+        file_path = unquote(path.lstrip("/"))
         if not file_path:
             file_path = "index.html"
         if os.path.exists(file_path):
