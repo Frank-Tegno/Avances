@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Usuario - Plantas Medicinales Chocoanas</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
+
+:root {
+  --verde-oscuro: #1b4332;
+  --verde-medio: #2d6a4f;
+  --verde-claro: #40916c;
+  --verde-neon: #52b788;
+  --lima: #74c69d;
+  --fondo: #081c15;
+  --fondo-card: #0d2818;
+  --texto: #d8f3dc;
+  --acento: #d4a373;
+  --alerta: #e63946;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Montserrat', 'Segoe UI', sans-serif;
+  background: #f0f0f0;
+  color: #333;
+  min-height: 100vh;
+}
+
+.portada {
+  background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.portada::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2352b788' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+.portada-logo {
+  width: 200px; height: 200px;
+  background: linear-gradient(135deg, var(--verde-neon), var(--verde-claro));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  margin-bottom: 30px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 1;
+  border: 4px solid rgba(255,255,255,0.2);
+}
+.portada h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--verde-neon);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.portada .subtitulo {
+  font-size: 1.3rem;
+  color: var(--lima);
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.portada .ubicacion {
+  font-size: 1rem;
+  color: var(--acento);
+  position: relative;
+  z-index: 1;
+}
+.portada-logo {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 14px;
+  border: 2px solid rgba(46, 230, 168, 0.4);
+  box-shadow: 0 0 30px rgba(46, 230, 168, 0.4);
+}
+.portada-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.portada .portada-mapa {
+  width: min(420px, 92%);
+  margin: 18px auto 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(46, 230, 168, 0.25);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+.portada .portada-mapa iframe { display: block; width: 100%; height: 200px; border: 0; }
+.portada .indice {
+  margin-top: 40px;
+  background: rgba(0,0,0,0.3);
+  padding: 25px 40px;
+  border-radius: 16px;
+  max-width: 600px;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(82,183,136,0.3);
+}
+.portada .indice h3 {
+  color: var(--verde-neon);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.portada .indice ol {
+  text-align: left;
+  color: var(--texto);
+  font-size: 0.95rem;
+  line-height: 2;
+  padding-left: 20px;
+}
+.portada .indice ol li {
+  border-bottom: 1px solid rgba(82,183,136,0.1);
+  padding-bottom: 4px;
+}
+
+.pagina {
+  background: white;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 50px 40px;
+  min-height: 100vh;
+  border-bottom: 3px solid #e0e0e0;
+  page-break-after: always;
+}
+
+.header-pagina {
+  background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+  color: white;
+  padding: 15px 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+.header-pagina .numero {
+  background: var(--verde-neon);
+  color: var(--fondo);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.header-pagina h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.instruccion {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 25px;
+  line-height: 1.7;
+  font-weight: 600;
+}
+.instruccion strong {
+  color: var(--verde-medio);
+}
+
+.mockup-navegador {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  margin-bottom: 25px;
+  border: 2px solid #333;
+}
+.mockup-barra {
+  background: #2d2d2d;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mockup-puntos {
+  display: flex;
+  gap: 6px;
+}
+.mockup-puntos span {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+}
+.mockup-puntos .rojo { background: #ff5f56; }
+.mockup-puntos .amarillo { background: #ffbd2e; }
+.mockup-puntos .verde { background: #27c93f; }
+.mockup-url {
+  background: #1a1a1a;
+  border-radius: 6px;
+  padding: 4px 15px;
+  font-size: 0.8rem;
+  color: #888;
+  flex: 1;
+  text-align: center;
+  font-family: monospace;
+}
+.mockup-contenido {
+  background: var(--fondo);
+  min-height: 200px;
+  position: relative;
+}
+
+.app-barra-superior {
+  background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+.app-barra-superior .app-titulo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.app-barra-superior .app-login {
+  background: linear-gradient(135deg, var(--verde-neon), var(--verde-claro));
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.app-menu {
+  background: var(--fondo-card);
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--verde-medio);
+  flex-wrap: wrap;
+}
+.app-menu-item {
+  padding: 12px 18px;
+  color: var(--lima);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-bottom: 3px solid transparent;
+}
+.app-menu-item.activo {
+  color: var(--verde-neon);
+  border-bottom-color: var(--verde-neon);
+  background: rgba(82,183,136,0.1);
+}
+
+.app-contenido {
+  padding: 25px;
+  color: var(--texto);
+}
+.app-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  align-items: center;
+}
+.app-hero-texto h2 {
+  color: var(--verde-neon);
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.app-hero-texto p {
+  color: var(--lima);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.app-carrusel {
+  background: linear-gradient(135deg, #1b4332, #0d2818);
+  border-radius: 12px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--verde-medio);
+  position: relative;
+  overflow: hidden;
+}
+.app-carrusel-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  padding: 5px 15px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: white;
+  white-space: nowrap;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+.app-card {
+  background: var(--fondo-card);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--verde-medio);
+}
+.app-card-img {
+  height: 80px;
+  background: linear-gradient(135deg, #1b4332, #2d6a4f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+.app-card-info {
+  padding: 10px;
+}
+.app-card-info h4 {
+  color: var(--verde-neon);
+  font-size: 0.85rem;
+  margin-bottom: 3px;
+}
+.app-card-info .cientifico {
+  color: var(--acento);
+  font-size: 0.7rem;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+.app-card-info p {
+  color: var(--lima);
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.app-tienda-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.app-producto {
+  background: var(--fondo-card);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--verde-medio);
+}
+.app-producto-img {
+  height: 80px;
+  background: linear-gradient(135deg, #1b4332, #2d6a4f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+.app-producto-info {
+  padding: 10px;
+}
+.app-producto-info h4 {
+  color: var(--verde-neon);
+  font-size: 0.8rem;
+  margin-bottom: 3px;
+}
+.app-producto-info .precio {
+  color: var(--acento);
+  font-size: 1rem;
+  font-weight: bold;
+}
+.app-producto-info .precio-tachado {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 0.7rem;
+  margin-left: 5px;
+}
+.app-btn {
+  width: 100%;
+  padding: 6px;
+  background: linear-gradient(135deg, var(--verde-medio), var(--verde-claro));
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.app-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.app-form-card {
+  background: var(--fondo-card);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--verde-medio);
+}
+.app-form-card h3 {
+  color: var(--verde-neon);
+  font-size: 1rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.app-campo {
+  margin-bottom: 10px;
+}
+.app-campo label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--lima);
+  margin-bottom: 4px;
+}
+.app-campo input, .app-campo select, .app-campo textarea {
+  width: 100%;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--verde-medio);
+  border-radius: 8px;
+  color: var(--texto);
+  font-size: 0.8rem;
+}
+.app-campo textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+.app-btn-enviar {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, var(--verde-medio), var(--verde-claro));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.app-info-contacto p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--lima);
+  font-size: 0.8rem;
+}
+
+.nota {
+  background: rgba(82,183,136,0.1);
+  border-left: 4px solid var(--verde-neon);
+  padding: 15px 20px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+}
+.nota strong {
+  color: var(--verde-medio);
+}
+
+.pasos-lista {
+  margin-top: 20px;
+  padding-left: 20px;
+}
+.pasos-lista li {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+}
+.pasos-lista li strong {
+  color: var(--verde-oscuro);
+}
+
+.footer-pagina {
+  text-align: center;
+  padding: 30px;
+  background: var(--verde-oscuro);
+  color: var(--lima);
+  margin-top: 40px;
+  border-radius: 12px;
+}
+.footer-pagina p {
+  font-size: 0.9rem;
+}
+
+@media print {
+  .pagina { page-break-after: always; }
+  body { background: white; }
+}
+
+@media (max-width: 768px) {
+  .pagina { padding: 25px 15px; }
+  .app-hero { grid-template-columns: 1fr; }
+  .app-grid, .app-tienda-grid { grid-template-columns: 1fr; }
+  .app-form { grid-template-columns: 1fr; }
+  .portada h1 { font-size: 2rem; }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- ==================== PORTADA ==================== -->
+<div class="portada">
+  <div class="portada-logo"><img src="favicon.ico" alt="Logo Plantas Medicinales Chocoanas"></div>
+  <h1>Plantas Medicinales<br>Chocoanas</h1>
+  <p class="subtitulo">Sabiduría ancestral del Pacífico colombiano</p>
+  <p class="ubicacion">📍 Quibdó, Chocó — Colombia</p>
+  <div class="portada-mapa">
+    <iframe title="Mapa del Chocó" src="https://maps.google.com/maps?q=Choc%C3%B3%2C%20Colombia&t=&z=7&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+
+  <div class="indice">
+    <h3>📋 MANUAL DE USUARIO</h3>
+    <ol>
+      <li>Registrarse en la plataforma</li>
+      <li>Iniciar sesión</li>
+      <li>Recuperar contraseña</li>
+      <li>Navegar por el catálogo de plantas</li>
+      <li>Explorar la tienda online</li>
+      <li>Añadir productos al carrito</li>
+      <li>Ver el carrito de compras</li>
+      <li>Conocer más sobre el proyecto</li>
+      <li>Contactar a la plataforma</li>
+      <li>Enviar un mensaje de ayuda</li>
+      <li>Explorar el sistema informático</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ==================== PAGINA 1: REGISTRO ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">1</div>
+    <h2>REGISTRARSE en Plantas Medicinales Chocoanas</h2>
+  </div>
+
+  <p class="instruccion">
+    Plantas Medicinales Chocoanas permite que el usuario se <strong>REGISTRE</strong> para poder guardar sus datos, iniciar sesión y realizar compras de productos naturales.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/login.html</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">🔐 Iniciar Sesión</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item">📞 Contacto</div>
+      </div>
+      <div class="app-contenido" style="text-align:center; padding:40px;">
+        <h2 style="color:var(--verde-neon); margin-bottom:20px;">Crear Cuenta</h2>
+        <div style="max-width:300px; margin:0 auto;">
+          <div class="app-campo" style="margin-bottom:12px;">
+            <input type="text" placeholder="Nombre completo" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <div class="app-campo" style="margin-bottom:12px;">
+            <input type="email" placeholder="Correo electrónico" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <div class="app-campo" style="margin-bottom:12px;">
+            <input type="tel" placeholder="Número de celular" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <div class="app-campo" style="margin-bottom:12px;">
+            <input type="password" placeholder="Contraseña" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <div class="app-campo" style="margin-bottom:12px;">
+            <input type="password" placeholder="Confirmar contraseña" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <button style="width:100%; padding:12px; background:linear-gradient(135deg, var(--verde-neon), var(--verde-claro)); border:none; border-radius:10px; color:white; font-weight:700; cursor:pointer; font-size:1rem;">
+            CREAR CUENTA
+          </button>
+        </div>
+        <p style="margin-top:15px; color:var(--lima); font-size:0.85rem;">
+          ¿Ya tienes cuenta? <a href="#" style="color:var(--verde-neon);">Inicia sesión aquí</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA REGISTRARSE</strong> le daremos clic al botón <strong>"Iniciar Sesión"</strong> ubicado en la esquina superior derecha, luego seleccionamos la opción <strong>"Registrarse"</strong> y completamos el formulario con:
+  </p>
+
+  <ul class="pasos-lista">
+    <li><strong>Nombre completo</strong></li>
+    <li><strong>Correo electrónico</strong></li>
+    <li><strong>Número de celular</strong></li>
+    <li><strong>Contraseña</strong> (mínimo 6 caracteres)</li>
+    <li><strong>Confirmar contraseña</strong></li>
+  </ul>
+
+  <div class="nota">
+    <strong>NOTA:</strong> Verifique que el correo electrónico esté escrito correctamente, ya que se enviará un correo de confirmación. Si ya ha ingresado anteriormente al sitio web, utilice directamente la opción de iniciar sesión.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 2: INICIAR SESION ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">2</div>
+    <h2>INICIAR SESIÓN en Plantas Medicinales Chocoanas</h2>
+  </div>
+
+  <p class="instruccion">
+    Plantas Medicinales Chocoanas permite que el usuario <strong>INICIE SESIÓN</strong> para poder realizar compras, guardar favoritos y acceder a su historial de pedidos.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/login.html</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">🔐 Iniciar Sesión</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item">📞 Contacto</div>
+      </div>
+      <div class="app-contenido" style="text-align:center; padding:40px;">
+        <h2 style="color:var(--verde-neon); margin-bottom:20px;">Iniciar Sesión</h2>
+        <div style="max-width:300px; margin:0 auto;">
+          <div class="app-campo" style="margin-bottom:15px;">
+            <input type="email" placeholder="Introduce tu correo electrónico" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto); font-size:0.9rem;">
+          </div>
+          <div class="app-campo" style="margin-bottom:15px;">
+            <input type="password" placeholder="Contraseña" style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto); font-size:0.9rem;">
+          </div>
+          <p style="text-align:left; margin-bottom:15px;">
+            <a href="#" style="color:var(--verde-neon); font-size:0.8rem;">¿Has olvidado tu contraseña?</a>
+          </p>
+          <button style="width:100%; padding:14px; background:linear-gradient(135deg, var(--verde-neon), var(--verde-claro)); border:none; border-radius:10px; color:white; font-weight:700; cursor:pointer; font-size:1rem;">
+            INGRESAR
+          </button>
+        </div>
+        <p style="margin-top:15px; color:var(--lima); font-size:0.85rem;">
+          ¿No tienes cuenta? <a href="#" style="color:var(--verde-neon);">Regístrate aquí</a>
+        </p>
+        <p style="margin-top:10px; font-size:0.75rem; color:var(--lima); opacity:0.7;">
+          Al iniciar sesión, aceptas nuestros Términos y condiciones y Política de Privacidad
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>LUEGO</strong> ingrese sus credenciales (<strong>correo electrónico y contraseña</strong>).
+  </p>
+  <p class="instruccion">
+    <strong>CLIC AL BOTÓN INGRESAR</strong> — Si las credenciales son correctas, será redirigido a su panel principal.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> Si olvidó su contraseña, utilice la opción <strong>"¿Has olvidado tu contraseña?"</strong> para recuperarla.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 3: RECUPERAR CONTRASEÑA ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">3</div>
+    <h2>CÓMO RECUPERAR CONTRASEÑA</h2>
+  </div>
+
+  <p class="instruccion">
+    <strong>PARA RECUPERAR LA CONTRASEÑA</strong> completamos el formulario con los siguientes datos:
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/recuperar.html</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+      </div>
+      <div class="app-contenido" style="text-align:center; padding:30px;">
+        <h2 style="color:var(--verde-neon); margin-bottom:20px;">Recuperar contraseña</h2>
+        <div style="max-width:320px; margin:0 auto; text-align:left;">
+          <div class="app-campo" style="margin-bottom:12px;">
+            <label style="color:var(--lima); font-size:0.85rem; display:block; margin-bottom:4px;">Correo electrónico</label>
+            <input type="email" placeholder="correo@ejemplo.com" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <div class="app-campo" style="margin-bottom:12px;">
+            <label style="color:var(--lima); font-size:0.85rem; display:block; margin-bottom:4px;">Número de celular</label>
+            <input type="tel" placeholder="+57 300 000 0000" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <div class="app-campo" style="margin-bottom:12px;">
+            <label style="color:var(--lima); font-size:0.85rem; display:block; margin-bottom:4px;">Nueva contraseña</label>
+            <input type="password" placeholder="Nueva contraseña" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <div class="app-campo" style="margin-bottom:15px;">
+            <label style="color:var(--lima); font-size:0.85rem; display:block; margin-bottom:4px;">Confirmar contraseña</label>
+            <input type="password" placeholder="Confirmar contraseña" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--verde-medio); background:rgba(0,0,0,0.3); color:var(--texto);">
+          </div>
+          <button style="width:100%; padding:12px; background:linear-gradient(135deg, var(--verde-neon), var(--verde-claro)); border:none; border-radius:10px; color:white; font-weight:700; cursor:pointer;">
+            CAMBIAR CONTRASEÑA
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ul class="pasos-lista">
+    <li><strong>Correo electrónico</strong> — El mismo con el que se registró</li>
+    <li><strong>Número de celular</strong> — Para verificación de identidad</li>
+    <li><strong>Nueva contraseña</strong> — Debe ser diferente a la anterior</li>
+    <li><strong>Confirmar contraseña</strong> — Repita la nueva contraseña</li>
+  </ul>
+
+  <p class="instruccion" style="margin-top:15px;">
+    <strong>LUEGO</strong> que completamos el formulario, le damos clic al botón que dice <strong>"CAMBIAR CONTRASEÑA"</strong>.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> Recibirá un correo electrónico de confirmación una vez que la contraseña haya sido actualizada exitosamente.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 4: CATALOGO ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">4</div>
+    <h2>CÓMO NAVEGAR POR EL CATÁLOGO DE PLANTAS</h2>
+  </div>
+
+  <p class="instruccion">
+    Plantas Medicinales Chocoanas permite que el usuario explore el <strong>CATÁLOGO DE PLANTAS MEDICINALES</strong> con información científica, usos tradicionales y propiedades de cada especie.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#catalogo</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">🔐 Iniciar Sesión</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item activo">📚 Catálogo</div>
+        <div class="app-menu-item">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item">📞 Contacto</div>
+      </div>
+      <div class="app-contenido">
+        <h2 style="color:var(--verde-neon); margin-bottom:15px; font-size:1.3rem;">📚 Catálogo de Plantas</h2>
+        <div class="app-grid">
+          <div class="app-card">
+            <div class="app-card-img">🌿</div>
+            <div class="app-card-info">
+              <h4>Guaco</h4>
+              <div class="cientifico">Mikania glomerata</div>
+              <p>Planta trepadora usada para problemas respiratorios, asma y tos.</p>
+              <div style="margin-top:8px; display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="padding:2px 8px; background:rgba(82,183,136,0.2); color:var(--verde-neon); border-radius:10px; font-size:0.6rem; font-weight:600;">Respiratorio</span>
+                <span style="padding:2px 8px; background:rgba(212,163,115,0.2); color:var(--acento); border-radius:10px; font-size:0.6rem; font-weight:600;">En stock</span>
+              </div>
+            </div>
+          </div>
+          <div class="app-card">
+            <div class="app-card-img">🍃</div>
+            <div class="app-card-info">
+              <h4>Cidrón</h4>
+              <div class="cientifico">Aloysia triphylla</div>
+              <p>Alivia dolores de estómago, gases y tiene propiedades relajantes.</p>
+              <div style="margin-top:8px; display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="padding:2px 8px; background:rgba(82,183,136,0.2); color:var(--verde-neon); border-radius:10px; font-size:0.6rem; font-weight:600;">Digestivo</span>
+                <span style="padding:2px 8px; background:rgba(212,163,115,0.2); color:var(--acento); border-radius:10px; font-size:0.6rem; font-weight:600;">En stock</span>
+              </div>
+            </div>
+          </div>
+          <div class="app-card">
+            <div class="app-card-img">🌱</div>
+            <div class="app-card-info">
+              <h4>Piñón Negro</h4>
+              <div class="cientifico">Jatropha curcas</div>
+              <p>Semilla antiinflamatoria. Usada en cataplasmas para dolores.</p>
+              <div style="margin-top:8px; display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="padding:2px 8px; background:rgba(82,183,136,0.2); color:var(--verde-neon); border-radius:10px; font-size:0.6rem; font-weight:600;">Antiinflamatorio</span>
+                <span style="padding:2px 8px; background:rgba(230,57,70,0.2); color:var(--alerta); border-radius:10px; font-size:0.6rem; font-weight:600;">Bajo stock</span>
+              </div>
+            </div>
+          </div>
+          <div class="app-card">
+            <div class="app-card-img">🌵</div>
+            <div class="app-card-info">
+              <h4>Insulina</h4>
+              <div class="cientifico">Costus pictus</div>
+              <p>Usada para regular niveles de azúcar en sangre.</p>
+              <div style="margin-top:8px; display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="padding:2px 8px; background:rgba(82,183,136,0.2); color:var(--verde-neon); border-radius:10px; font-size:0.6rem; font-weight:600;">Metabólico</span>
+                <span style="padding:2px 8px; background:rgba(212,163,115,0.2); color:var(--acento); border-radius:10px; font-size:0.6rem; font-weight:600;">En stock</span>
+              </div>
+            </div>
+          </div>
+          <div class="app-card">
+            <div class="app-card-img">🥭</div>
+            <div class="app-card-info">
+              <h4>Noni</h4>
+              <div class="cientifico">Morinda citrifolia</div>
+              <p>Fruto inmunoestimulante, analgésico y antioxidante.</p>
+              <div style="margin-top:8px; display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="padding:2px 8px; background:rgba(82,183,136,0.2); color:var(--verde-neon); border-radius:10px; font-size:0.6rem; font-weight:600;">Inmunitario</span>
+                <span style="padding:2px 8px; background:rgba(212,163,115,0.2); color:var(--acento); border-radius:10px; font-size:0.6rem; font-weight:600;">En stock</span>
+              </div>
+            </div>
+          </div>
+          <div class="app-card">
+            <div class="app-card-img">🌾</div>
+            <div class="app-card-info">
+              <h4>Sábila</h4>
+              <div class="cientifico">Aloe vera</div>
+              <p>Gel cicatrizante y regenerador de piel. Usada para quemaduras.</p>
+              <div style="margin-top:8px; display:flex; gap:4px; flex-wrap:wrap;">
+                <span style="padding:2px 8px; background:rgba(82,183,136,0.2); color:var(--verde-neon); border-radius:10px; font-size:0.6rem; font-weight:600;">Dermatológico</span>
+                <span style="padding:2px 8px; background:rgba(212,163,115,0.2); color:var(--acento); border-radius:10px; font-size:0.6rem; font-weight:600;">En stock</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA VER EL CATÁLOGO</strong> le daremos clic al botón del menú superior que dice <strong>"📚 Catálogo"</strong>.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> En el catálogo podrá ver: <strong>Nombre común, nombre científico, descripción de uso, etiquetas de categoría (uso terapéutico) y disponibilidad de stock</strong>. No es necesario iniciar sesión para explorar el catálogo.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 5: TIENDA ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">5</div>
+    <h2>CÓMO EXPLORAR LA TIENDA ONLINE</h2>
+  </div>
+
+  <p class="instruccion">
+    Plantas Medicinales Chocoanas permite que el usuario explore la <strong>TIENDA ONLINE</strong> para conocer los productos disponibles, sus precios y promociones.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#tienda</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">🔐 Iniciar Sesión</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item activo">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item">📞 Contacto</div>
+      </div>
+      <div class="app-contenido">
+        <h2 style="color:var(--verde-neon); margin-bottom:15px; font-size:1.3rem;">🛒 Tienda Online</h2>
+        <div class="app-tienda-grid">
+          <div class="app-producto">
+            <div class="app-producto-img">🌿</div>
+            <div class="app-producto-info">
+              <h4>Infusión de Guaco</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Bolsa x 25g — Corte fino</p>
+              <div class="precio">$12.500 <span class="precio-tachado">$15.000</span></div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="app-producto">
+            <div class="app-producto-img">🍃</div>
+            <div class="app-producto-info">
+              <h4>Té de Cidrón</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Bolsa x 30g — Hojas deshidratadas</p>
+              <div class="precio">$10.000</div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="app-producto">
+            <div class="app-producto-img">🌵</div>
+            <div class="app-producto-info">
+              <h4>Gel de Sábila Natural</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Frasco x 120ml — 100% orgánico</p>
+              <div class="precio">$28.000</div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="app-producto">
+            <div class="app-producto-img">🥭</div>
+            <div class="app-producto-info">
+              <h4>Jugo de Noni</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Botella x 500ml — Puro, sin aditivos</p>
+              <div class="precio">$45.000 <span class="precio-tachado">$52.000</span></div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="app-producto">
+            <div class="app-producto-img">📦</div>
+            <div class="app-producto-info">
+              <h4>Kit Plantas Chocoano</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">4 productos + guía de uso ancestral</p>
+              <div class="precio">$85.000</div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="app-producto">
+            <div class="app-producto-img">💧</div>
+            <div class="app-producto-info">
+              <h4>Extracto de Insulina</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Gotero x 30ml — Concentrado natural</p>
+              <div class="precio">$35.000</div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA VER LA TIENDA</strong> le daremos clic al botón del menú superior que dice <strong>"🛒 Tienda"</strong>.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> En la tienda podrá ver: <strong>Nombre del producto, descripción, precio actual, precio tachado (si tiene descuento) y botón para añadir al carrito</strong>. Los precios están en pesos colombianos (COP). Los productos con precio tachado tienen descuento activo.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 6: AÑADIR AL CARRITO ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">6</div>
+    <h2>CÓMO AÑADIR PRODUCTOS AL CARRITO</h2>
+  </div>
+
+  <p class="instruccion">
+    Después de iniciar sesión, Plantas Medicinales Chocoanas permite que el usuario <strong>AÑADA PRODUCTOS AL CARRITO DE COMPRAS</strong> para posteriormente realizar el pago.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#tienda</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">👤 Mi Cuenta</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item activo">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item">📞 Contacto</div>
+      </div>
+      <div class="app-contenido">
+        <h2 style="color:var(--verde-neon); margin-bottom:15px; font-size:1.3rem;">🛒 Tienda Online</h2>
+        <div class="app-tienda-grid">
+          <div class="app-producto" style="border:2px solid var(--verde-neon); position:relative;">
+            <div style="position:absolute; top:-10px; right:-10px; background:var(--verde-neon); color:var(--fondo); width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:bold; z-index:5;">✓</div>
+            <div class="app-producto-img">🌿</div>
+            <div class="app-producto-info">
+              <h4>Infusión de Guaco</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Bolsa x 25g — Corte fino</p>
+              <div class="precio">$12.500 <span class="precio-tachado">$15.000</span></div>
+              <button class="app-btn" style="background:linear-gradient(135deg, var(--verde-claro), var(--verde-neon));">✓ Añadido</button>
+            </div>
+          </div>
+          <div class="app-producto">
+            <div class="app-producto-img">🍃</div>
+            <div class="app-producto-info">
+              <h4>Té de Cidrón</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Bolsa x 30g — Hojas deshidratadas</p>
+              <div class="precio">$10.000</div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="app-producto">
+            <div class="app-producto-img">🌵</div>
+            <div class="app-producto-info">
+              <h4>Gel de Sábila Natural</h4>
+              <p style="color:var(--lima); font-size:0.7rem;">Frasco x 120ml — 100% orgánico</p>
+              <div class="precio">$28.000</div>
+              <button class="app-btn">🛒 Añadir al carrito</button>
+            </div>
+          </div>
+        </div>
+        <!-- Carrito flotante -->
+        <div style="position:fixed; bottom:20px; right:20px; background:var(--verde-neon); color:var(--fondo); width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 6px 20px rgba(82,183,136,0.4); z-index:200;">
+          🛒
+          <div style="position:absolute; top:-4px; right:-4px; background:var(--alerta); color:white; width:22px; height:22px; border-radius:50%; font-size:0.75rem; display:flex; align-items:center; justify-content:center; font-weight:bold;">1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA AÑADIR UN PRODUCTO</strong> le daremos clic al botón verde que dice <strong>"🛒 Añadir al carrito"</strong> ubicado debajo de cada producto.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> Al añadir un producto, aparecerá una notificación de confirmación en la parte superior derecha. El icono del carrito flotante en la esquina inferior derecha mostrará el número de productos añadidos. Puede añadir múltiples productos antes de finalizar la compra.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 7: VER CARRITO ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">7</div>
+    <h2>CÓMO VER EL CARRITO DE COMPRAS</h2>
+  </div>
+
+  <p class="instruccion">
+    Después de añadir productos, Plantas Medicinales Chocoanas permite que el usuario <strong>VISUALICE SU CARRITO</strong> para revisar los productos seleccionados y el total a pagar.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#carrito</div>
+    </div>
+    <div class="mockup-contenido">
+      <div style="background:var(--fondo-card); border-radius:12px; padding:25px; max-width:400px; margin:30px auto; border:1px solid var(--verde-medio); text-align:center;">
+        <h2 style="color:var(--verde-neon); margin-bottom:15px; font-size:1.2rem;">🛒 Carrito de Compras</h2>
+        <div style="text-align:left; margin-bottom:15px; padding:15px; background:rgba(0,0,0,0.2); border-radius:8px;">
+          <p style="color:var(--lima); font-size:0.9rem; margin-bottom:8px;"><strong>Productos:</strong> Guaco, Cidrón, Sábila</p>
+          <div style="border-top:1px solid var(--verde-medio); margin:10px 0; padding-top:10px;">
+            <p style="color:var(--acento); font-size:1.3rem; font-weight:bold;">Total: $50.500</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button style="flex:1; padding:10px; background:linear-gradient(135deg, var(--verde-medio), var(--verde-claro)); border:none; border-radius:8px; color:white; font-weight:600; cursor:pointer; font-size:0.85rem;">
+            Finalizar compra
+          </button>
+          <button style="flex:1; padding:10px; background:transparent; border:1px solid var(--verde-medio); border-radius:8px; color:var(--lima); font-weight:600; cursor:pointer; font-size:0.85rem;">
+            Seguir comprando
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA VER EL CARRITO</strong> le daremos clic al icono flotante <strong>"🛒"</strong> ubicado en la esquina inferior derecha de la pantalla.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> En el carrito podrá ver: <strong>Lista de productos añadidos, precio total de la compra, botón para finalizar compra y botón para seguir comprando</strong>. Si el carrito está vacío, se mostrará un mensaje indicándolo y un botón para ir a la tienda. El sistema de pagos está en desarrollo y estará disponible próximamente.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 8: CONOCER MAS ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">8</div>
+    <h2>CÓMO CONOCER MÁS SOBRE EL PROYECTO</h2>
+  </div>
+
+  <p class="instruccion">
+    Después de iniciar sesión o sin haber iniciado la sesión, Plantas Medicinales Chocoanas permite que el usuario <strong>CONOZCA MÁS SOBRE EL PROYECTO</strong>, su misión y visión.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#inicio</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">🔐 Iniciar Sesión</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item activo">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item">📞 Contacto</div>
+      </div>
+      <div class="app-contenido">
+        <div class="app-hero">
+          <div class="app-hero-texto">
+            <h2>Raíces que sanan</h2>
+            <p>El Chocó es una de las regiones con mayor biodiversidad del planeta. Desde tiempos ancestrales, las comunidades afrodescendientes e indígenas han preservado el conocimiento de plantas medicinales que hoy curan dolencias, fortalecen el cuerpo y conectan con la naturaleza.</p>
+            <p style="margin-top:10px;">Nuestra plataforma digitaliza este patrimonio cultural, ofreciendo información científica, venta ética y conectividad con las comunidades recolectoras.</p>
+          </div>
+          <div class="app-carrusel">
+            <div style="display:flex; align-items:center; justify-content:center; height:100%; font-size:3rem;">🌿</div>
+            <div class="app-carrusel-overlay">Biodiversidad única</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA SABER MÁS SOBRE EL PROYECTO</strong> le daremos clic al botón del menú superior que dice <strong>"🏠 Inicio"</strong>.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> En la sección de inicio podrá leer información sobre: <strong>La biodiversidad del Chocó, el conocimiento ancestral de las comunidades, la misión de digitalizar el patrimonio cultural, y un carrusel de imágenes representativas</strong>. Esta sección está disponible para todos los usuarios, sin necesidad de iniciar sesión.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 9: CONTACTAR ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">9</div>
+    <h2>CÓMO CONTACTAR A LA PLATAFORMA</h2>
+  </div>
+
+  <p class="instruccion">
+    Después de iniciar sesión o sin haber iniciado la sesión, Plantas Medicinales Chocoanas permite que el usuario se <strong>CONTACTE</strong> con el equipo y vea la información de ubicación.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#contacto</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">🔐 Iniciar Sesión</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item activo">📞 Contacto</div>
+      </div>
+      <div class="app-contenido">
+        <h2 style="color:var(--verde-neon); margin-bottom:15px; font-size:1.3rem;">📞 Contacto</h2>
+        <div class="app-form">
+          <div class="app-form-card">
+            <h3>📨 Escríbenos</h3>
+            <div class="app-campo">
+              <label>Nombre completo</label>
+              <input type="text" placeholder="Tu nombre">
+            </div>
+            <div class="app-campo">
+              <label>Correo electrónico</label>
+              <input type="email" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="app-campo">
+              <label>Asunto</label>
+              <select>
+                <option>Consulta general</option>
+                <option>Pedido</option>
+                <option>Información sobre plantas</option>
+                <option>Alianza comercial</option>
+                <option>Soporte técnico</option>
+              </select>
+            </div>
+            <div class="app-campo">
+              <label>Mensaje</label>
+              <textarea placeholder="¿En qué podemos ayudarte?"></textarea>
+            </div>
+            <button class="app-btn-enviar">📤 Enviar mensaje</button>
+          </div>
+          <div class="app-form-card">
+            <h3>📍 Información</h3>
+            <div class="app-info-contacto">
+              <p>📍 Quibdó, Chocó</p>
+              <p>📞 +57 322 261 3882</p>
+              <p>✉️ contacto@plantaschocoanas.co</p>
+              <p>🕐 Lunes a Sábado: 8:00 AM — 6:00 PM</p>
+              <p>🌐 www.plantaschocoanas.co</p>
+            </div>
+            <h3 style="margin-top:20px; color:var(--verde-neon); font-size:1rem;">🌐 Redes Sociales</h3>
+            <div class="app-info-contacto">
+              <p>📘 Facebook: /PlantasMedicinalesChoco</p>
+              <p>📸 Instagram: @plantas.chocoanas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA CONTACTARNOS</strong> le daremos clic al botón del menú superior que dice <strong>"📞 Contacto"</strong>.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> En la sección de contacto podrá: <strong>Enviar un mensaje mediante el formulario (nombre, correo, asunto, mensaje), ver información de contacto (dirección, teléfono, email, horario) y acceder a las redes sociales de la plataforma</strong>. El formulario de contacto está disponible para todos los usuarios.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 10: ENVIAR MENSAJE ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">10</div>
+    <h2>CÓMO ENVIAR UN MENSAJE DE AYUDA</h2>
+  </div>
+
+  <p class="instruccion">
+    Después de iniciar sesión, Plantas Medicinales Chocoanas permite que el usuario <strong>ENVÍE UN MENSAJE</strong> al equipo de soporte si tiene alguna duda, problema o sugerencia.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#contacto</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">👤 Mi Cuenta</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item">🛒 Tienda</div>
+        <div class="app-menu-item">💻 Informática</div>
+        <div class="app-menu-item activo">📞 Contacto</div>
+      </div>
+      <div class="app-contenido">
+        <h2 style="color:var(--verde-neon); margin-bottom:15px; font-size:1.3rem;">📨 Escríbenos</h2>
+        <div style="max-width:450px; margin:0 auto;">
+          <div class="app-form-card">
+            <div class="app-campo">
+              <label>Nombre completo *</label>
+              <input type="text" placeholder="Tu nombre completo" required>
+            </div>
+            <div class="app-campo">
+              <label>Correo electrónico *</label>
+              <input type="email" placeholder="correo@ejemplo.com" required>
+            </div>
+            <div class="app-campo">
+              <label>Asunto *</label>
+              <select required>
+                <option value="">Seleccione un asunto</option>
+                <option>Consulta general</option>
+                <option>Pedido</option>
+                <option>Información sobre plantas</option>
+                <option>Alianza comercial</option>
+                <option>Soporte técnico</option>
+              </select>
+            </div>
+            <div class="app-campo">
+              <label>Mensaje *</label>
+              <textarea placeholder="Describe tu consulta, problema o sugerencia..." required></textarea>
+            </div>
+            <button class="app-btn-enviar">📤 Enviar mensaje</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA ENVIAR UN MENSAJE</strong> completamos el formulario de contacto con:
+  </p>
+
+  <ul class="pasos-lista">
+    <li><strong>Nombre completo</strong> — Su nombre real para identificación</li>
+    <li><strong>Correo electrónico</strong> — Para recibir la respuesta</li>
+    <li><strong>Asunto</strong> — Seleccione la categoría de su mensaje</li>
+    <li><strong>Mensaje</strong> — Describa su consulta con el mayor detalle posible</li>
+  </ul>
+
+  <p class="instruccion" style="margin-top:15px;">
+    <strong>LUEGO</strong> le daremos clic al botón que dice <strong>"📤 Enviar mensaje"</strong>.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> Recibirá una respuesta en un plazo de 24 a 48 horas hábiles. Asegúrese de escribir un correo electrónico válido para poder contactarlo. Los campos marcados con * son obligatorios.
+  </div>
+</div>
+
+<!-- ==================== PAGINA 11: SISTEMA INFORMATICO ==================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <div class="numero">11</div>
+    <h2>CÓMO EXPLORAR EL SISTEMA INFORMÁTICO</h2>
+  </div>
+
+  <p class="instruccion">
+    Después de iniciar sesión o sin haber iniciado la sesión, Plantas Medicinales Chocoanas permite que el usuario <strong>CONOZCA EL SISTEMA INFORMÁTICO</strong> que respalda la plataforma.
+  </p>
+
+  <div class="mockup-navegador">
+    <div class="mockup-barra">
+      <div class="mockup-puntos">
+        <span class="rojo"></span>
+        <span class="amarillo"></span>
+        <span class="verde"></span>
+      </div>
+      <div class="mockup-url">www.plantaschocoanas.co/#informatica</div>
+    </div>
+    <div class="mockup-contenido">
+      <div class="app-barra-superior">
+        <div class="app-titulo">🌿 Salud y cultura</div>
+        <div class="app-login">🔐 Iniciar Sesión</div>
+      </div>
+      <div class="app-menu">
+        <div class="app-menu-item">🏠 Inicio</div>
+        <div class="app-menu-item">📚 Catálogo</div>
+        <div class="app-menu-item">🛒 Tienda</div>
+        <div class="app-menu-item activo">💻 Informática</div>
+        <div class="app-menu-item">📞 Contacto</div>
+      </div>
+      <div class="app-contenido">
+        <h2 style="color:var(--verde-neon); margin-bottom:15px; font-size:1.3rem;">💻 Sistema Informático</h2>
+        <div class="app-grid" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="app-card" style="padding:20px; text-align:center;">
+            <div style="font-size:2.5rem; margin-bottom:10px;">🗄️</div>
+            <h4 style="color:var(--verde-neon); margin-bottom:8px;">Base de Datos Botánica</h4>
+            <p style="color:var(--lima); font-size:0.75rem; line-height:1.5;">Registro digital de especies medicinales con información taxonómica, usos tradicionales y contraindicaciones.</p>
+            <ul style="text-align:left; margin-top:10px; padding-left:15px; color:var(--lima); font-size:0.7rem; line-height:1.8;">
+              <li>Taxonomía completa</li>
+              <li>Usos etnobotánicos</li>
+              <li>Contraindicaciones</li>
+              <li>Distribución geográfica</li>
+            </ul>
+          </div>
+          <div class="app-card" style="padding:20px; text-align:center;">
+            <div style="font-size:2.5rem; margin-bottom:10px;">📊</div>
+            <h4 style="color:var(--verde-neon); margin-bottom:8px;">Dashboard de Inventario</h4>
+            <p style="color:var(--lima); font-size:0.75rem; line-height:1.5;">Panel de control en tiempo real para gestionar stock de productos.</p>
+            <ul style="text-align:left; margin-top:10px; padding-left:15px; color:var(--lima); font-size:0.7rem; line-height:1.8;">
+              <li>Stock en tiempo real</li>
+              <li>Alertas de bajo inventario</li>
+              <li>Reportes de ventas</li>
+            </ul>
+          </div>
+          <div class="app-card" style="padding:20px; text-align:center;">
+            <div style="font-size:2.5rem; margin-bottom:10px;">🔒</div>
+            <h4 style="color:var(--verde-neon); margin-bottom:8px;">Seguridad y Conectividad</h4>
+            <p style="color:var(--lima); font-size:0.75rem; line-height:1.5;">Trazabilidad de cada producto desde el campo hasta el cliente.</p>
+            <ul style="text-align:left; margin-top:10px; padding-left:15px; color:var(--lima); font-size:0.7rem; line-height:1.8;">
+              <li>Trazabilidad completa</li>
+              <li>Certificación de origen</li>
+              <li>Pagos seguros</li>
+              <li>Datos encriptados</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="instruccion" style="margin-top:20px;">
+    <strong>PARA VER EL SISTEMA INFORMÁTICO</strong> le daremos clic al botón del menú superior que dice <strong>"💻 Informática"</strong>.
+  </p>
+
+  <div class="nota">
+    <strong>NOTA:</strong> En esta sección podrá conocer: <strong>La base de datos botánica con información taxonómica, el dashboard de inventario en tiempo real, y el sistema de seguridad y trazabilidad</strong>. Esta sección está disponible para todos los usuarios y muestra la infraestructura tecnológica que respalda la plataforma.
+  </div>
+</div>
+
+<!-- ==================== FOOTER FINAL ==================== -->
+<div class="pagina" style="text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:50vh;">
+  <div style="font-size:4rem; margin-bottom:20px;">🌿</div>
+  <h2 style="color:var(--verde-oscuro); font-size:2rem; margin-bottom:10px;">¡Gracias por usar Plantas Medicinales Chocoanas!</h2>
+  <p style="color:#666; font-size:1.1rem; margin-bottom:20px;">Preservando el conocimiento ancestral del Pacífico colombiano</p>
+  <div class="footer-pagina" style="width:100%; max-width:500px;">
+    <p>🌿 Plantas Medicinales Chocoanas — Hecho con ♥ desde el Pacífico colombiano</p>
+    <p style="margin-top:8px; font-size:0.8rem; opacity:0.7;">© 2026 — Quibdó, Chocó — Colombia</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <title>Iniciar Sesión — Plantas Medicinales Chocoanas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=4">
+    <style>
+      body {
+        background: radial-gradient(1100px 700px at 85% -10%, rgba(46, 230, 168, 0.12), transparent 60%), linear-gradient(160deg, #0b2a1a 0%, #071d12 45%, #0e5535 80%, #12704a 100%) !important;
+        color: #eafff4 !important;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="login-page">
+
+    <div class="bg-deco" aria-hidden="true">
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+        <div class="orb o3"></div>
+        <div class="hoja h1">🌿</div>
+        <div class="hoja h2">🍃</div>
+        <div class="hoja h3">🌱</div>
+    </div>
+
+    <div class="login-wrap">
+
+        <aside class="login-brand">
+            <div class="hoja-bg hb1">🌿</div>
+            <div class="hoja-bg hb2">🍃</div>
+            <div class="brand-logo">
+                <span class="logo-orb"><img src="favicon.ico" alt="Logo Plantas Medicinales Chocoanas"></span>
+                <span class="logo-txt">Plantas Medicinales <em>Chocoanas</em></span>
+            </div>
+            <h1 class="brand-titulo">Raíces que sanan,<br>naturaleza viva.</h1>
+            <p class="brand-tag">El Chocó es una de las regiones con mayor biodiversidad del planeta. Aquí conectamos la sabiduría ancestral con la tecnología para llevar el Pacífico colombiano a tu hogar.</p>
+            <div class="brand-chips">
+                <span class="chip">🌱 100% Natural</span>
+                <span class="chip">🌍 Origen certificado</span>
+                <span class="chip">🔒 Compras seguras</span>
+            </div>
+            <div class="brand-stats">
+                <div class="brand-stat"><div class="bs-num">+200</div><div class="bs-txt">Especies documentadas</div></div>
+                <div class="brand-stat"><div class="bs-num">+40</div><div class="bs-txt">Comunidades aliadas</div></div>
+                <div class="brand-stat"><div class="bs-num">★ 4.9</div><div class="bs-txt">Valoración de clientes</div></div>
+            </div>
+        </aside>
+
+        <main class="login-col">
+            <div class="login-container">
+                <button type="button" class="volver-btn" onclick="window.location.href='index.html'">← Volver al inicio</button>
+
+                <div class="login-header">
+                    <div class="icono">🌿</div>
+                    <h1>Iniciar Sesión</h1>
+                    <p>Accede a tu cuenta de Plantas Medicinales Chocoanas</p>
+                </div>
+
+                <form id="formLogin" onsubmit="procesarLogin(event)">
+                    <div class="campo">
+                        <label for="usuario">Correo o usuario</label>
+                        <input type="text" id="usuario" name="usuario" placeholder="correo@ejemplo.com o tu usuario" required autocomplete="username">
+                    </div>
+                    <div class="campo">
+                        <label for="password">Contraseña</label>
+                        <div class="contrasena-caja">
+                            <input type="password" id="password" name="password" placeholder="Tu contraseña" required autocomplete="current-password">
+                            <button type="button" class="ojo-btn" onclick="togglePassword('password')" title="Mostrar/ocultar">👁️</button>
+                        </div>
+                    </div>
+                    <p style="text-align:right; margin-bottom:12px;">
+                        <a onclick="mostrarRecuperar()" style="font-size:0.85rem; cursor:pointer;">¿Olvidaste tu contraseña?</a>
+                    </p>
+                    <button type="submit" class="btn-login-submit">🔐 Ingresar</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>¿No tienes cuenta? <a onclick="mostrarRegistro()">Regístrate</a></p>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Modal Registro -->
+    <div class="modal-overlay" id="modalRegistro">
+        <div class="modal" style="max-width:460px;">
+            <button class="modal-cerrar" onclick="cerrarRegistro()">×</button>
+            <h2>📝 Crear Cuenta</h2>
+            <p class="ayuda">Elige tu rol. El <strong>comprador</strong> solo compra; el <strong>vendedor</strong> publica productos y gestiona el stock de los suyos. (El rol admin lo asigna el sistema.)</p>
+            <form id="formRegistro" onsubmit="procesarRegistro(event)">
+                <div class="campo">
+                    <label>¿Qué tipo de cuenta necesitas? *</label>
+                    <div class="seleccion-rol">
+                        <button type="button" class="pill-rol sel" id="pill-comprador" onclick="seleccionarRol(this,'comprador')">🛒 Comprador</button>
+                        <button type="button" class="pill-rol" id="pill-vendedor" onclick="seleccionarRol(this,'vendedor')">🧑‍💼 Vendedor</button>
+                    </div>
+                    <input type="hidden" id="rol-registro" value="comprador">
+                </div>
+                <div class="campo">
+                    <label>Nombre completo</label>
+                    <input type="text" name="nombre" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="campo">
+                    <label>Correo electrónico</label>
+                    <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div class="campo">
+                    <label>Usuario</label>
+                    <input type="text" name="usuario" placeholder="Elige un usuario (mín. 3 caracteres)" required>
+                </div>
+                <div class="campo">
+                    <label>Teléfono (opcional)</label>
+                    <input type="tel" name="telefono" placeholder="+57 300 000 0000">
+                </div>
+                <div class="campo">
+                    <label>Contraseña</label>
+                    <div class="contrasena-caja">
+                        <input type="password" name="password" placeholder="Mínimo 6 caracteres" required>
+                        <button type="button" class="ojo-btn" onclick="togglePassword(this.parentNode.querySelector('input'))" title="Mostrar/ocultar">👁️</button>
+                    </div>
+                </div>
+                <div class="campo">
+                    <label>Confirmar contraseña</label>
+                    <input type="password" name="password2" placeholder="Repite la contraseña" required>
+                </div>
+                <button type="submit" class="btn-login-submit">Registrarse</button>
+            </form>
+            <p style="text-align:center; margin-top:16px; color:var(--lima); font-size:0.9rem;">
+                ¿Ya tienes cuenta? <a onclick="cerrarRegistro()" style="color:var(--verde-neon); text-decoration:none; font-weight:600; cursor:pointer;">Inicia sesión</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal Recuperar contraseña -->
+    <div class="modal-overlay" id="modalRecuperar">
+        <div class="modal" style="max-width:420px;">
+            <button class="modal-cerrar" onclick="cerrarRecuperar()">×</button>
+            <h2>🔑 Recuperar Contraseña</h2>
+            <p class="ayuda">Ingresa tu correo y la nueva contraseña.</p>
+            <form onsubmit="procesarRecuperar(event)">
+                <div class="campo">
+                    <label>Correo electrónico</label>
+                    <input type="email" id="rec-email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div class="campo">
+                    <label>Nueva contraseña</label>
+                    <div class="contrasena-caja">
+                        <input type="password" id="rec-password" placeholder="Mínimo 6 caracteres" required>
+                        <button type="button" class="ojo-btn" onclick="togglePassword('rec-password')" title="Mostrar/ocultar">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login-submit">Cambiar contraseña</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+    const API_URL = location.protocol.startsWith("http") ? "" : "http://localhost:5000";
+    let rolSeleccionado = "comprador";
+
+    function togglePassword(el) {
+        const input = typeof el === "string" ? document.getElementById(el) : el;
+        if (input) input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function seleccionarRol(boton, rol) {
+        rolSeleccionado = rol;
+        document.querySelectorAll(".pill-rol").forEach(function (p) { p.classList.remove("sel"); });
+        boton.classList.add("sel");
+        document.getElementById("rol-registro").value = rol;
+    }
+
+    async function procesarLogin(e) {
+        e.preventDefault();
+        const usuario = document.getElementById("usuario").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!usuario || !password) {
+            Swal.fire({ icon: "warning", title: "Campos incompletos", text: "Ingresa usuario y contraseña.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#f6c978" });
+            return;
+        }
+
+        Swal.fire({ title: "Verificando credenciales...", text: "Conectando con el servidor", background: "#071d12", color: "#eafff4", allowOutsideClick: false, didOpen: function () { Swal.showLoading(); } });
+
+        try {
+            const res = await fetch(API_URL + "/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ usuario: usuario, password: password })
+            });
+            const data = await res.json();
+            Swal.close();
+
+            if (data.success) {
+                localStorage.setItem("pmc_token", data.token);
+                localStorage.setItem("pmc_user", JSON.stringify(data.usuario));
+                Swal.fire({
+                    icon: "success",
+                    title: data.message,
+                    text: "Redirigiendo a tu panel...",
+                    background: "#071d12",
+                    color: "#eafff4",
+                    confirmButtonColor: "#34d399",
+                    timer: 1800,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                }).then(function () {
+                    window.location.href = "index.html";
+                });
+            } else {
+                Swal.fire({ icon: "error", title: "Error de autenticación", text: data.message, background: "#071d12", color: "#eafff4", confirmButtonColor: "#ff5c77" });
+            }
+        } catch (err) {
+            Swal.close();
+            Swal.fire({ icon: "error", title: "Error de conexión", text: "No se pudo conectar al servidor. Verifica que esté corriendo en el puerto 5000.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#ff5c77" });
+        }
+    }
+
+    async function procesarRegistro(e) {
+        e.preventDefault();
+        const form = document.getElementById("formRegistro");
+        const formData = new FormData(form);
+        const password = formData.get("password");
+        const password2 = formData.get("password2");
+
+        const data = {
+            nombre: formData.get("nombre").trim(),
+            email: formData.get("email").trim().toLowerCase(),
+            usuario: formData.get("usuario").trim().toLowerCase(),
+            telefono: (formData.get("telefono") || "").trim(),
+            password: password,
+            rol: document.getElementById("rol-registro").value
+        };
+
+        if (!data.nombre || !data.email || !data.usuario || !password) {
+            Swal.fire({ icon: "warning", title: "Campos incompletos", text: "Todos los campos son obligatorios.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#f6c978" });
+            return;
+        }
+        if (password.length < 6) {
+            Swal.fire({ icon: "warning", title: "Contraseña muy corta", text: "Debe tener al menos 6 caracteres.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#f6c978" });
+            return;
+        }
+        if (password !== password2) {
+            Swal.fire({ icon: "warning", title: "Las contraseñas no coinciden", text: "Revisa e intenta de nuevo.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#f6c978" });
+            return;
+        }
+
+        Swal.fire({ title: "Creando cuenta...", background: "#071d12", color: "#eafff4", allowOutsideClick: false, didOpen: function () { Swal.showLoading(); } });
+
+        try {
+            const res = await fetch(API_URL + "/api/registro", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+            Swal.close();
+
+            if (result.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "¡Cuenta creada!",
+                    text: result.message + " Ahora puedes iniciar sesión.",
+                    background: "#071d12",
+                    color: "#eafff4",
+                    confirmButtonColor: "#34d399"
+                }).then(function () {
+                    cerrarRegistro();
+                    document.getElementById("usuario").value = data.email;
+                    document.getElementById("password").value = "";
+                    form.reset();
+                    document.getElementById("rol-registro").value = "comprador";
+                    document.querySelector("#pill-comprador").classList.add("sel");
+                    document.querySelector("#pill-vendedor").classList.remove("sel");
+                });
+            } else {
+                const icono = res.status === 409 ? "warning" : "error";
+                Swal.fire({ icon: icono, title: "No se pudo registrar", text: result.message, background: "#071d12", color: "#eafff4", confirmButtonColor: "#ff5c77" });
+            }
+        } catch (err) {
+            Swal.close();
+            Swal.fire({ icon: "error", title: "Error de conexión", text: "No se pudo conectar al servidor.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#ff5c77" });
+        }
+    }
+
+    async function procesarRecuperar(e) {
+        e.preventDefault();
+        const email = document.getElementById("rec-email").value.trim();
+        const password = document.getElementById("rec-password").value;
+
+        if (!email || password.length < 6) {
+            Swal.fire({ icon: "warning", title: "Revisa los datos", text: "Correo y contraseña (mín. 6 caracteres) son obligatorios.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#f6c978" });
+            return;
+        }
+
+        Swal.fire({ title: "Actualizando contraseña...", background: "#071d12", color: "#eafff4", allowOutsideClick: false, didOpen: function () { Swal.showLoading(); } });
+
+        try {
+            const res = await fetch(API_URL + "/api/recuperar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email, password: password })
+            });
+            const data = await res.json();
+            Swal.close();
+            if (data.success) {
+                Swal.fire({ icon: "success", title: "¡Contraseña cambiada!", text: data.message, background: "#071d12", color: "#eafff4", confirmButtonColor: "#34d399" }).then(function () {
+                    cerrarRecuperar();
+                });
+            } else {
+                Swal.fire({ icon: "error", title: "No se pudo cambiar", text: data.message, background: "#071d12", color: "#eafff4", confirmButtonColor: "#ff5c77" });
+            }
+        } catch (err) {
+            Swal.close();
+            Swal.fire({ icon: "error", title: "Error de conexión", text: "No se pudo conectar al servidor.", background: "#071d12", color: "#eafff4", confirmButtonColor: "#ff5c77" });
+        }
+    }
+
+    function mostrarRegistro() { document.getElementById("modalRegistro").classList.add("visible"); }
+    function cerrarRegistro() { document.getElementById("modalRegistro").classList.remove("visible"); }
+    function mostrarRecuperar() { document.getElementById("modalRecuperar").classList.add("visible"); }
+    function cerrarRecuperar() { document.getElementById("modalRecuperar").classList.remove("visible"); }
+
+    document.getElementById("modalRegistro").addEventListener("click", function (e) { if (e.target === this) cerrarRegistro(); });
+    document.getElementById("modalRecuperar").addEventListener("click", function (e) { if (e.target === this) cerrarRecuperar(); });
+</script>
+
+</body>
+</html>

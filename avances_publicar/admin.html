@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <title>Panel de Gestión — Plantas Medicinales Chocoanas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=4">
+    <style>
+      body {
+        background: radial-gradient(1100px 700px at 85% -10%, rgba(46, 230, 168, 0.12), transparent 60%), linear-gradient(160deg, #0b2a1a 0%, #071d12 45%, #0e5535 80%, #12704a 100%) !important;
+        color: #eafff4 !important;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="bg-deco" aria-hidden="true">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="hoja h1">🌿</div>
+  <div class="hoja h2">🍃</div>
+  <div class="hoja h3">🌱</div>
+</div>
+
+<div class="admin-topbar">
+    <div class="at-titulo"><img class="top-logo" src="favicon.ico" alt="Logo">🌿 Plantas Medicinales Chocoanas — <em>Panel de Gestión</em></div>
+    <div class="at-der">
+        <a class="btn secundario" href="index.html" style="padding:8px 16px;">← Volver a la tienda</a>
+        <div class="usuario-caja" id="usuario-caja"></div>
+    </div>
+</div>
+
+<div class="admin-contenedor">
+    <div class="admin-sujeto" id="admin-sujeto"></div>
+    <div id="aviso-acceso" class="aviso" style="display:none;">Solo los administradores y vendedores pueden acceder a este panel.</div>
+
+    <div class="admin-stats" id="admin-stats"></div>
+
+    <div class="panel-grupo">
+        <div class="grupo-cabeza">
+            <h3>📦 Inventario y Stock</h3>
+            <button class="btn" onclick="abrirProductoModal()">＋ Nuevo producto</button>
+        </div>
+        <div class="tabla-wrap">
+            <table class="tabla">
+                <thead>
+                    <tr><th>Imagen</th><th>Producto</th><th>Precio</th><th>Estado</th><th>Stock</th><th>Acciones</th></tr>
+                </thead>
+                <tbody id="tabla-productos-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel-grupo" id="panel-usuarios">
+        <div class="grupo-cabeza"><h3>👥 Usuarios Registrados</h3></div>
+        <div class="tabla-wrap">
+            <table class="tabla">
+                <thead>
+                    <tr><th>Nombre</th><th>Correo</th><th>Usuario</th><th>Rol</th><th>Teléfono</th><th>Registro</th></tr>
+                </thead>
+                <tbody id="tabla-usuarios-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel-grupo">
+        <div class="grupo-cabeza"><h3>💰 Ventas</h3></div>
+        <div class="tabla-wrap">
+            <table class="tabla">
+                <thead>
+                    <tr><th>#</th><th>Cliente</th><th>Total</th><th>Fecha</th><th>Detalle</th></tr>
+                </thead>
+                <tbody id="tabla-ventas-body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Producto -->
+<div class="modal-overlay" id="modal-producto">
+    <div class="modal" style="max-width:520px;">
+        <button class="modal-cerrar" onclick="cerrarProductoModal()">×</button>
+        <h2 id="producto-modal-titulo">Nuevo producto</h2>
+        <div class="campo">
+            <label>Nombre *</label>
+            <input type="text" id="prod-nombre" placeholder="Ej: Té de Guaco">
+        </div>
+        <div class="campo">
+            <label>Descripción</label>
+            <textarea id="prod-descripcion" placeholder="Descripción del producto"></textarea>
+        </div>
+        <div class="campo">
+            <label>Precio (COP) *</label>
+            <input type="number" id="prod-precio" min="0" placeholder="12500">
+        </div>
+        <div class="campo">
+            <label>Precio anterior (descuento, opcional)</label>
+            <input type="number" id="prod-precio-anterior" min="0" placeholder="15000">
+        </div>
+        <div class="campo">
+            <label>Stock</label>
+            <input type="number" id="prod-stock" min="0" value="0">
+        </div>
+        <div class="campo">
+            <label>Categoría</label>
+            <input type="text" id="prod-categoria" placeholder="Infusión, Té, Gel, Jugo, Kit, Extracto...">
+        </div>
+        <div class="campo">
+            <label>Imagen (ruta)</label>
+            <input type="text" id="prod-imagen" placeholder="img/guaco.jpeg">
+        </div>
+        <button class="btn" style="width:100%;" onclick="guardarProducto()">💾 Guardar producto</button>
+    </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+    function iniciarAdmin() {
+        const u = getUser();
+        if (!u || !getToken()) {
+            document.getElementById("aviso-acceso").style.display = "block";
+            document.getElementById("aviso-acceso").innerHTML = "No has iniciado sesión. Serás redirigido al login...";
+            document.getElementById("aviso-acceso").classList.add("error");
+            setTimeout(function () { window.location.href = "login.html"; }, 1800);
+            return;
+        }
+        if (!puedeGestionar()) {
+            document.getElementById("aviso-acceso").style.display = "block";
+            document.getElementById("aviso-acceso").classList.add("error");
+            document.getElementById("aviso-acceso").textContent = "Tu cuenta es de tipo '" + rolNombre(u.rol) + "'. Necesitas ser administrador o vendedor para gestionar el panel.";
+            document.getElementById("admin-stats").style.display = "none";
+            document.querySelectorAll(".panel-grupo").forEach(function (el) { el.style.display = "none"; });
+            return;
+        }
+        const sujeto = document.getElementById("admin-sujeto");
+        if (sujeto) {
+            sujeto.innerHTML =
+                '<span>Bienvenido, <strong style="color:var(--verde-neon);">' + escapar(u.nombre) + '</strong></span>' +
+                '<span class="rol-badge rol-' + u.rol + '">' + rolNombre(u.rol) + '</span>' +
+                '<span style="color:var(--texto-suave);">' + escapar(u.correo) + '</span>';
+        }
+        cargarProductos();
+        cargarUsuarios();
+        cargarVentas();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        aplicarSesion();
+        verificarSesion();
+        iniciarAdmin();
+    });
+</script>
+
+</body>
+</html>
