@@ -1,0 +1,19 @@
+[build]
+  command = "echo build-ok"
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# La API la resuelve la funcion serverless (mismo origen que el sitio)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api"
+  status = 200
+
+# SPA: cualquier ruta que no sea un archivo real cae en index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

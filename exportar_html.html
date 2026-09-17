@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exportar HTML a Figma (sin PNG) — Plantas Medicinales Chocoanas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg0: #020d07;
+            --bg1: #071d12;
+            --bg2: #0b2a1a;
+            --neon: #2ee6a8;
+            --neon-soft: #74f0c4;
+            --lima: #a7f3d0;
+            --texto: #eafff4;
+            --texto-suave: #8fd8b8;
+            --acento: #f6c978;
+            --alerta: #ff5c77;
+            --line: rgba(125, 255, 200, 0.14);
+            --fuente-enc: 'Fraunces', Georgia, serif;
+            --fuente-ui: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--fuente-ui);
+            background: radial-gradient(1100px 700px at 85% -10%, rgba(46, 230, 168, 0.12), transparent 60%),
+                        linear-gradient(160deg, #0b2a1a 0%, #071d12 45%, #0e5535 80%, #12704a 100%) !important;
+            color: var(--texto);
+            min-height: 100vh;
+        }
+        a { color: var(--neon); }
+        h1, h2, h3 { font-family: var(--fuente-enc); }
+
+        .toolbar {
+            background: linear-gradient(135deg, #0b2a1a, #10b981);
+            color: #fff;
+            padding: 22px 28px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+        }
+        .toolbar h1 { font-size: 1.4rem; display: flex; align-items: center; gap: 8px; }
+        .toolbar p { font-size: 0.85rem; color: var(--lima); margin-top: 4px; }
+        .botones { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+        .botones .etiqueta-fila { width: 100%; font-size: 0.72rem; color: var(--lima); letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 11px 20px; border: none; border-radius: 999px;
+            background: linear-gradient(135deg, #34d399, #10b981);
+            color: #03150d; font-weight: 700; font-size: 0.9rem; font-family: var(--fuente-ui);
+            cursor: pointer; transition: all 0.25s; text-decoration: none;
+            box-shadow: 0 6px 22px rgba(46, 230, 168, 0.30);
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(46, 230, 168, 0.45); }
+        .btn.secundario { background: rgba(46, 230, 168, 0.06); border: 1px solid var(--line); color: var(--neon-soft); box-shadow: none; }
+        .btn.secundario:hover { border-color: var(--neon); color: var(--neon); background: rgba(46, 230, 168, 0.12); }
+        .btn.peligro { background: linear-gradient(135deg, #ff5c77, #c22f4a); color: #fff; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+        .nota { max-width: 1100px; margin: 30px auto 10px; padding: 0 20px; color: var(--lima); font-size: 0.95rem; line-height: 1.7; }
+        .nota h3 { color: var(--neon); margin: 18px 0 10px; font-size: 1.25rem; }
+        .paso {
+            background: rgba(10, 36, 22, 0.55); border: 1px solid var(--line); border-radius: 14px;
+            padding: 16px 18px; margin-bottom: 12px; border-left: 4px solid #10b981;
+        }
+        .paso code { background: rgba(46, 230, 168, 0.12); padding: 2px 7px; border-radius: 6px; font-size: 0.85rem; color: var(--neon-soft); }
+        .estado { max-width: 1100px; margin: 14px auto 0; padding: 0 20px; font-size: 0.9rem; color: var(--texto-suave); }
+
+        .toast {
+            position: fixed; top: 18px; right: 18px; z-index: 9999;
+            background: linear-gradient(180deg, rgba(13, 44, 28, 0.97), rgba(6, 26, 16, 0.97));
+            border: 1px solid var(--line); border-left: 4px solid var(--neon);
+            border-radius: 14px; padding: 14px 18px; max-width: 360px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            transform: translateX(120%); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .toast.visible { transform: translateX(0); }
+        .toast .t-titulo { font-weight: 800; color: var(--neon); font-size: 0.95rem; }
+        .toast .t-texto { font-size: 0.82rem; color: var(--lima); margin-top: 3px; }
+
+        .grid { max-width: 1100px; margin: 22px auto; padding: 0 20px; }
+        .card {
+            background: rgba(10, 36, 22, 0.55); border: 1px solid var(--line); border-radius: 16px;
+            padding: 18px; margin-bottom: 14px;
+        }
+        .card h3 { color: var(--neon); margin-bottom: 10px; }
+        .card p { color: var(--texto-suave); font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px; }
+        .card .btn { margin: 4px 6px 4px 0; padding: 8px 16px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<div class="toolbar">
+    <h1>🌿 Exportar HTML a Figma — sin PNG</h1>
+    <p>Captura cada pantalla <strong>real ya renderizada</strong> (con productos, imágenes y botones), embebe <code>style.css</code> e imágenes en base64, y copia un documento HTML completo al portapapeles. Sin generar ningún PNG.</p>
+    <div class="botones">
+        <button class="btn" onclick="copiarTodas()">📋 Copiar TODAS (1 documento)</button>
+        <button class="btn secundario" onclick="descargarTodas()">📥 Descargar TODAS (.html)</button>
+        <span class="etiqueta-fila">Sesión de prueba (para que el Panel exporte con datos)</span>
+        <button class="btn secundario" onclick="iniciarSesionDemo('admin')">👑 Login Admin</button>
+        <button class="btn secundario" onclick="iniciarSesionDemo('vendedor')">🧑‍💼 Login Vendedor</button>
+        <button class="btn secundario" onclick="iniciarSesionDemo('comprador')">🛒 Login Comprador</button>
+        <button class="btn peligro" onclick="cerrarSesionDemo()">🚪 Cerrar sesión</button>
+    </div>
+</div>
+
+<div class="nota">
+    <h3>¿Cómo llevarlo a Figma?</h3>
+    <div class="paso">
+        <strong>1.</strong> Instala en Figma el plugin <code>HTML to Figma</code> (Community) o <code>html.to.design</code>.
+    </div>
+    <div class="paso">
+        <strong>2.</strong> Pulsa <code>Copiar HTML</code> en cada pantalla (o <code>Copiar TODAS</code> para las 3 en un solo documento).
+    </div>
+    <div class="paso">
+        <strong>3.</strong> En Figma abre el plugin y pega el HTML copiado. Los productos ya vienen renderizados y las imágenes van embebidas (base64), así que se verán sin depender de localhost.
+    </div>
+    <div class="paso">
+        <strong>Nota sobre los botones:</strong> el plugin <code>HTML to Figma</code> convierte el HTML en capas <strong>estáticas y editables</strong>; JavaScript no se ejecuta dentro de Figma, por eso los botones se ven pero no se pueden "pulsar". Eso es una limitación del plugin, no del archivo exportado. Todos los botones, tablas y textos quedan como capas editables.
+    </div>
+</div>
+
+<div class="estado" id="estado">Preparando…</div>
+
+<div class="grid">
+    <div class="card">
+        <h3>1 · Login</h3>
+        <p>Archivo real: <code>login.html</code> — formulario, cuentas de prueba, botones y estilos.</p>
+        <button class="btn" onclick="copiarPagina('login')">📋 Copiar HTML · Login</button>
+        <button class="btn secundario" onclick="descargarPagina('login')">📥 Descargar login.html</button>
+    </div>
+    <div class="card">
+        <h3>2 · Inicio (índice)</h3>
+        <p>Archivo real: <code>index.html</code> — se copia solo la pestaña visible para evitar duplicados. Si quieres la tienda con productos, primero inicia sesión y exporta.</p>
+        <button class="btn" onclick="copiarPagina('inicio')">📋 Copiar HTML · Inicio</button>
+        <button class="btn secundario" onclick="descargarPagina('inicio')">📥 Descargar index.html</button>
+    </div>
+    <div class="card">
+        <h3>3 · Panel de Gestión</h3>
+        <p>Archivo real: <code>admin.html</code> — para que salga con productos/usuarios/ventas, pulsa <code>👑 Login Admin</code> arriba antes de copiar.</p>
+        <button class="btn" onclick="copiarPagina('panel')">📋 Copiar HTML · Panel</button>
+        <button class="btn secundario" onclick="descargarPagina('panel')">📥 Descargar admin.html</button>
+    </div>
+</div>
+
+<div class="toast" id="toast">
+    <div class="t-titulo" id="toast-titulo">OK</div>
+    <div class="t-texto" id="toast-texto"></div>
+</div>
+
+<script>
+    var PAGINAS = [
+        { id: "login",  archivo: "login.html",  titulo: "1 · Login" },
+        { id: "inicio", archivo: "index.html",  titulo: "2 · Inicio" },
+        { id: "panel",  archivo: "admin.html",  titulo: "3 · Panel de Gestión" }
+    ];
+
+    var DEMO = {
+        admin:     ["admin@plantaschocoanas.co", "admin123"],
+        vendedor:  ["vendedor@plantaschocoanas.co", "vendedor123"],
+        comprador: ["comprador@plantaschocoanas.co", "comprador123"]
+    };
+
+    var cssCache = null;
+    var capturaCache = {};
+
+    function avisar(titulo, texto) {
+        var t = document.getElementById("toast");
+        document.getElementById("toast-titulo").textContent = titulo;
+        document.getElementById("toast-texto").textContent = texto;
+        t.classList.add("visible");
+        clearTimeout(t._tm);
+        t._tm = setTimeout(function () { t.classList.remove("visible"); }, 5000);
+    }
+
+    function setEstado(msg) {
+        document.getElementById("estado").textContent = msg;
+    }
+
+    function getToken() { return localStorage.getItem("pmc_token"); }
+
+    async function obtenerCss() {
+        if (cssCache) return cssCache;
+        var r = await fetch("style.css?v=" + Date.now());
+        if (!r.ok) throw new Error("No se pudo leer style.css (HTTP " + r.status + ")");
+        cssCache = await r.text();
+        return cssCache;
+    }
+
+    function blobToDataUrl(blob) {
+        return new Promise(function (resolve, reject) {
+            var fr = new FileReader();
+            fr.onload = function () { resolve(fr.result); };
+            fr.onerror = reject;
+            fr.readAsDataURL(blob);
+        });
+    }
+
+    // Convierte las imágenes relativas en data URIs para que se vean en Figma.
+    async function embederImagenes(doc) {
+        var imgs = Array.prototype.slice.call(doc.querySelectorAll("img"));
+        for (var i = 0; i < imgs.length; i++) {
+            var img = imgs[i];
+            var src = img.getAttribute("src");
+            if (!src || /^(data:|https?:|\/\/)/i.test(src)) continue;
+            var abs = src.indexOf("/") === 0 ? location.origin + src : location.origin + "/" + src;
+            try {
+                var resp = await fetch(abs);
+                if (!resp.ok) continue;
+                var blob = await resp.blob();
+                img.setAttribute("src", await blobToDataUrl(blob));
+            } catch (e) { /* imagen no disponible, se deja como está */ }
+        }
+    }
+
+    // Evita el "duplicado": borra las secciones ocultas de las pestañas y los modales cerrados.
+    function limpiarOcultos(doc) {
+        var w = doc.defaultView || window;
+        var secs = Array.prototype.slice.call(doc.querySelectorAll("section.tab"));
+        secs.forEach(function (sec) {
+            if (w.getComputedStyle(sec).display === "none") sec.parentNode.removeChild(sec);
+        });
+        var modals = Array.prototype.slice.call(doc.querySelectorAll(".modal-overlay"));
+        modals.forEach(function (m) {
+            if (w.getComputedStyle(m).display === "none") m.parentNode.removeChild(m);
+        });
+    }
+
+    // Carga la página real en un iframe oculto (mismo origen), deja que JS renderice
+    // los productos y devuelve el documento ya renderizado.
+    function capturarPagina(p) {
+        return new Promise(function (resolve, reject) {
+            var iframe = document.createElement("iframe");
+            iframe.style.position = "fixed";
+            iframe.style.left = "-10000px";
+            iframe.style.top = "0";
+            iframe.style.width = "1280px";
+            iframe.style.height = "900px";
+            iframe.style.border = "none";
+            iframe.src = p.archivo;
+            iframe.onload = function () {
+                setTimeout(async function () {
+                    try {
+                        var doc = iframe.contentDocument;
+                        if (!doc) throw new Error("No se pudo acceder al contenido de " + p.archivo);
+                        limpiarOcultos(doc);
+                        await embederImagenes(doc);
+                        var html = doc.documentElement.outerHTML;
+                        resolve(html);
+                    } catch (e) {
+                        reject(e);
+                    } finally {
+                        iframe.remove();
+                    }
+                }, 2400);
+            };
+            iframe.onerror = function () {
+                iframe.remove();
+                reject(new Error("No se pudo cargar " + p.archivo + ". ¿Está corriendo el servidor?"));
+            };
+            document.body.appendChild(iframe);
+        });
+    }
+
+    async function construirPagina(id) {
+        if (capturaCache[id]) return capturaCache[id];
+        var p = PAGINAS.find(function (x) { return x.id === id; });
+        var html = await capturarPagina(p);
+        var css = await obtenerCss();
+
+        // Reemplazar el <link> a style.css por un <style> con el CSS embebido.
+        html = html.replace(/<link[^>]*href=["']style\.css[^"']*["'][^>]*>/i,
+            "<style id=\"css-embebido\">\n" + css + "\n</style>");
+
+        // Quitar scripts para que el documento exportado sea solo HTML+CSS (los botones quedan).
+        html = html.replace(/<script[\s\S]*?<\/script>/gi, "");
+
+        capturaCache[id] = html;
+        return html;
+    }
+
+    function copiarTexto(texto, titulo) {
+        var ok = function () {
+            avisar(titulo, "HTML copiado al portapapeles. Pégalo en el plugin HTML to Figma.");
+        };
+        var fallback = function () {
+            var area = document.createElement("textarea");
+            area.value = texto;
+            area.style.position = "fixed";
+            area.style.opacity = "0";
+            document.body.appendChild(area);
+            area.select();
+            try {
+                document.execCommand("copy");
+                ok();
+            } catch (e) {
+                avisar("Error", "No se pudo copiar. Usa el botón Descargar .html.");
+            }
+            document.body.removeChild(area);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(texto).then(ok, fallback);
+        } else {
+            fallback();
+        }
+    }
+
+    function descargar(texto, nombre) {
+        var blob = new Blob([texto], { type: "text/html;charset=utf-8" });
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = nombre;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    }
+
+    async function copiarPagina(id) {
+        try {
+            setEstado("Capturando y copiando HTML de la pantalla…");
+            var html = await construirPagina(id);
+            copiarTexto(html, "Copiar HTML");
+            setEstado("Listo: pantalla copiada al portapapeles.");
+        } catch (e) {
+            avisar("Error", e.message);
+            setEstado("Error: " + e.message);
+        }
+    }
+
+    async function descargarPagina(id) {
+        try {
+            setEstado("Capturando y descargando HTML de la pantalla…");
+            var html = await construirPagina(id);
+            var p = PAGINAS.find(function (x) { return x.id === id; });
+            descargar(html, p.archivo);
+            avisar("Descargado", "Archivo " + p.archivo + " listo.");
+            setEstado("Listo: archivo descargado.");
+        } catch (e) {
+            avisar("Error", e.message);
+            setEstado("Error: " + e.message);
+        }
+    }
+
+    async function construirTodas() {
+        var css = await obtenerCss();
+        var secciones = [];
+        for (var i = 0; i < PAGINAS.length; i++) {
+            var p = PAGINAS[i];
+            var html = await construirPagina(p.id);
+            var bodyM = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+            var bodyHtml = bodyM ? bodyM[1] : "";
+            secciones.push(
+                '<section class="figma-pantalla pantalla-' + p.id + '">' +
+                '<div class="pantalla-titulo">' + p.titulo + '</div>' +
+                bodyHtml +
+                '</section>'
+            );
+        }
+
+        var doc = '<!DOCTYPE html>\n<html lang="es">\n<head>\n' +
+            '<meta charset="UTF-8">\n' +
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+            '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+            '<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n' +
+            '<style>\n' + css + '\n' +
+            '/* Ajustes para el documento combinado de 3 pantallas */\n' +
+            '.figma-pantalla { position: relative; min-height: 100vh; overflow: hidden; border-bottom: 5px solid rgba(46,230,168,0.25); }\n' +
+            '.figma-pantalla .bg-deco { position: absolute; }\n' +
+            '.figma-pantalla .menu-superior { position: relative; }\n' +
+            '.figma-pantalla .boton-carrito { position: absolute; bottom: 24px; right: 24px; }\n' +
+            '.figma-pantalla .carrito-panel { position: absolute; top: 0; right: 0; bottom: 0; transform: none; }\n' +
+            '.figma-pantalla .modal-overlay { position: absolute; }\n' +
+            '.figma-pantalla .admin-topbar { position: relative; }\n' +
+            '.figma-pantalla .login-wrap { margin: 40px auto; }\n' +
+            '.pantalla-login { display: flex; align-items: center; justify-content: center; padding: 24px; }\n' +
+            '.pantalla-titulo { position: absolute; top: 14px; right: 18px; z-index: 60; background: rgba(2,13,7,0.75); border: 1px solid rgba(46,230,168,0.4); color: #2ee6a8; font-family: Inter, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; }\n' +
+            '</style>\n</head>\n<body>\n' +
+            secciones.join("\n") +
+            '\n</body>\n</html>';
+        return doc;
+    }
+
+    async function copiarTodas() {
+        try {
+            setEstado("Capturando las 3 pantallas y construyendo el documento…");
+            var doc = await construirTodas();
+            copiarTexto(doc, "Copiar TODAS");
+            setEstado("Listo: documento combinado copiado al portapapeles.");
+        } catch (e) {
+            avisar("Error", e.message);
+            setEstado("Error: " + e.message);
+        }
+    }
+
+    async function descargarTodas() {
+        try {
+            setEstado("Capturando las 3 pantallas y descargando el documento…");
+            var doc = await construirTodas();
+            descargar(doc, "plantas-chocoanas-todas.html");
+            avisar("Descargado", "Archivo plantas-chocoanas-todas.html listo.");
+            setEstado("Listo: documento combinado descargado.");
+        } catch (e) {
+            avisar("Error", e.message);
+            setEstado("Error: " + e.message);
+        }
+    }
+
+    // ------------------------------------------------------------
+    // Sesión demo (compartida con las páginas porque es el mismo origen)
+    // ------------------------------------------------------------
+    async function iniciarSesionDemo(rol) {
+        var creds = DEMO[rol];
+        if (!creds) return;
+        try {
+            var r = await fetch("/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ usuario: creds[0], password: creds[1] })
+            });
+            var data = await r.json();
+            if (data.success) {
+                localStorage.setItem("pmc_token", data.token);
+                localStorage.setItem("pmc_user", JSON.stringify(data.usuario));
+                capturaCache = {};
+                avisar("Sesión iniciada", "Ahora exporta el Panel: saldrá con los datos reales de " + (data.usuario.nombre || rol) + ".");
+            } else {
+                avisar("Error", "No se pudo iniciar sesión: " + (data.message || "revísalo"));
+            }
+        } catch (e) {
+            avisar("Error", "No se pudo conectar con el servidor para iniciar sesión.");
+        }
+    }
+
+    async function cerrarSesionDemo() {
+        try {
+            await fetch("/api/logout", { method: "POST", headers: { "X-Token": getToken() } });
+        } catch (e) { /* sin conexión */ }
+        localStorage.removeItem("pmc_token");
+        localStorage.removeItem("pmc_user");
+        capturaCache = {};
+        avisar("Sesión cerrada", "El panel se exportará como invitado.");
+    }
+
+    (async function iniciar() {
+        try {
+            await obtenerCss();
+            setEstado("Listo: servidor conectado. Usa los botones para copiar el HTML de cada pantalla (ya renderizada).");
+        } catch (e) {
+            setEstado("⚠️ No se pudo conectar con el servidor local. Abre esta herramienta desde http://localhost:5000/exportar_html.html (con el servidor corriendo).");
+        }
+    })();
+</script>
+
+</body>
+</html>

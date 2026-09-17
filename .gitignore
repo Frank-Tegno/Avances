@@ -1,0 +1,15 @@
+node_modules/
+.netlify/
+.env
+.env.local
+.DS_Store
+
+# carpetas que no forman parte del sitio publicado
+env/
+privado/
+guia-estudio/
+pseint_flujo/
+uploads/*
+!uploads/.gitkeep
+__pycache__/
+*.pyc

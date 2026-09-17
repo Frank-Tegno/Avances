@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <title>🌿 Plantas Medicinales Chocoanas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=4">
+    <style>
+      body {
+        background: radial-gradient(1100px 700px at 85% -10%, rgba(46, 230, 168, 0.12), transparent 60%), linear-gradient(160deg, #0b2a1a 0%, #071d12 45%, #0e5535 80%, #12704a 100%) !important;
+        color: #eafff4 !important;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="bg-deco" aria-hidden="true">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="hoja h1">🌿</div>
+  <div class="hoja h2">🍃</div>
+  <div class="hoja h3">🌱</div>
+</div>
+
+<input type="radio" name="tabs" id="tab-inicio" checked>
+<input type="radio" name="tabs" id="tab-catalogo">
+<input type="radio" name="tabs" id="tab-venta">
+<input type="radio" name="tabs" id="tab-informatica">
+<input type="radio" name="tabs" id="tab-contacto">
+<input type="radio" name="tabs" id="tab-admin">
+
+<header class="encabezado">
+  <div class="hoja-logo izq">🌿</div>
+  <div class="hoja-logo der">🍃</div>
+  <div class="enc-top">
+    <div class="enc-logo">
+      <span class="logo-orb"><img src="favicon.ico" alt="Logo Plantas Medicinales Chocoanas"></span>
+      <span class="logo-txt">Plantas Medicinales <em>Chocoanas</em></span>
+    </div>
+    <div class="usuario-caja" id="usuario-caja"></div>
+  </div>
+  <div class="enc-badge">🍃 Sabiduría ancestral del Pacífico</div>
+  <h1>Salud y Cultura</h1>
+  <p class="subtitulo">Plantas medicinales del Chocó, <em>vivas</em> en cada taza. Biodiversidad, ciencia y tradición afrocolombiana.</p>
+  <div class="enc-cta">
+    <label for="tab-venta" class="btn enc-cta-btn">🛒 Explorar la tienda</label>
+  </div>
+</header>
+
+<nav class="menu-superior">
+  <div class="contenedor-menu">
+    <label for="tab-inicio">🏠 Inicio</label>
+    <label for="tab-catalogo">📚 Catálogo</label>
+    <label for="tab-venta">🛒 Tienda</label>
+    <label for="tab-informatica">💻 Informática</label>
+    <label for="tab-contacto">📞 Contacto</label>
+    <label for="tab-admin" class="solo-admin">📊 Panel</label>
+  </div>
+</nav>
+
+<div id="rol-banner" class="rol-banner" style="display:none;"></div>
+
+<main>
+  <section class="tab seccion-inicio">
+    <div class="hero">
+      <div class="hero-texto">
+        <h2>Raíces que sanan</h2>
+        <p>El Chocó es una de las regiones con mayor biodiversidad del planeta. Desde tiempos ancestrales, las comunidades afrodescendientes e indígenas han preservado el conocimiento de plantas medicinales que hoy curan dolencias, fortalecen el cuerpo y conectan con la naturaleza.</p>
+        <p style="margin-top:12px;">Nuestra plataforma digitaliza este patrimonio cultural, ofreciendo información científica, venta ética y conectividad con las comunidades recolectoras.</p>
+        <div class="hero-tags">
+          <span class="hero-tag">🌱 100% Natural</span>
+          <span class="hero-tag">🌍 Origen certificado</span>
+          <span class="hero-tag">🛒 Envío a todo el país</span>
+        </div>
+      </div>
+      <div class="carrusel">
+        <div class="slides">
+          <div class="slide-item">
+            <img src="img/choco3.jpeg" alt="Biodiversidad del Chocó">
+            <span>Biodiversidad única</span>
+          </div>
+          <div class="slide-item">
+            <img src="img/choco2.jpeg" alt="Conocimiento ancestral">
+            <span>Conocimiento ancestral</span>
+          </div>
+          <div class="slide-item">
+            <img src="img/choco1.jpeg" alt="Medicina natural">
+            <span>Medicina natural</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab seccion-catalogo">
+    <h2>📚 Catálogo de Plantas</h2>
+    <div class="grid-catalogo">
+      <div class="planta-card">
+        <img class="planta-img" src="img/guaco.jpeg" alt="Guaco">
+        <div class="planta-info">
+          <h3>Guaco</h3>
+          <div class="nombre-cientifico">Mikania glomerata</div>
+          <p>Planta trepadora usada tradicionalmente para problemas respiratorios, asma y tos. Posee propiedades broncodilatadoras.</p>
+          <div class="etiquetas">
+            <span class="etiqueta etq-uso">Respiratorio</span>
+            <span class="etiqueta etq-stock">En stock</span>
+            <span class="etiqueta etq-origen">Chocó</span>
+          </div>
+        </div>
+      </div>
+      <div class="planta-card">
+        <img class="planta-img" src="img/cidron.jpeg" alt="Cidrón">
+        <div class="planta-info">
+          <h3>Cidrón</h3>
+          <div class="nombre-cientifico">Aloysia triphylla</div>
+          <p>Conocido como "hierba luisa". Alivia dolores de estómago, gases y tiene propiedades relajantes. Infusión tradicional del Pacífico.</p>
+          <div class="etiquetas">
+            <span class="etiqueta etq-uso">Digestivo</span>
+            <span class="etiqueta etq-stock">En stock</span>
+            <span class="etiqueta etq-origen">Chocó</span>
+          </div>
+        </div>
+      </div>
+      <div class="planta-card">
+        <img class="planta-img" src="img/piñon.jpeg" alt="Piñón Negro">
+        <div class="planta-info">
+          <h3>Piñón Negro</h3>
+          <div class="nombre-cientifico">Jatropha curcas</div>
+          <p>Semilla con propiedades antiinflamatorias. Se utiliza en cataplasmas para dolores musculares y articulares.</p>
+          <div class="etiquetas">
+            <span class="etiqueta etq-uso">Antiinflamatorio</span>
+            <span class="etiqueta etq-stock">Bajo stock</span>
+            <span class="etiqueta etq-origen">Chocó</span>
+          </div>
+        </div>
+      </div>
+      <div class="planta-card">
+        <img class="planta-img" src="img/insulina.webp" alt="Planta Insulina">
+        <div class="planta-info">
+          <h3>Insulina</h3>
+          <div class="nombre-cientifico">Costus pictus</div>
+          <p>Usada tradicionalmente para regular niveles de azúcar en sangre. Infusión recomendada en comunidades afrochocoanas.</p>
+          <div class="etiquetas">
+            <span class="etiqueta etq-uso">Metabólico</span>
+            <span class="etiqueta etq-stock">En stock</span>
+            <span class="etiqueta etq-origen">Chocó</span>
+          </div>
+        </div>
+      </div>
+      <div class="planta-card">
+        <img class="planta-img" src="img/noni.jpeg" alt="Noni">
+        <div class="planta-info">
+          <h3>Noni</h3>
+          <div class="nombre-cientifico">Morinda citrifolia</div>
+          <p>Fruto amazónico con múltiples propiedades: inmunoestimulante, analgésico y antioxidante. Muy usado en el Pacífico.</p>
+          <div class="etiquetas">
+            <span class="etiqueta etq-uso">Inmunitario</span>
+            <span class="etiqueta etq-stock">En stock</span>
+            <span class="etiqueta etq-origen">Chocó</span>
+          </div>
+        </div>
+      </div>
+      <div class="planta-card">
+        <img class="planta-img" src="img/sabila.jpeg" alt="Sábila">
+        <div class="planta-info">
+          <h3>Sábila</h3>
+          <div class="nombre-cientifico">Aloe vera</div>
+          <p>Gel cicatrizante y regenerador de piel. Usada para quemaduras, heridas y afecciones dermatológicas en la región.</p>
+          <div class="etiquetas">
+            <span class="etiqueta etq-uso">Dermatológico</span>
+            <span class="etiqueta etq-stock">En stock</span>
+            <span class="etiqueta etq-origen">Chocó</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab seccion-venta">
+    <h2>🛒 Tienda Online</h2>
+    <div class="campo" style="max-width:420px; margin-bottom:24px;">
+      <input type="text" id="buscador" placeholder="🔍 Buscar producto, categoría o ingrediente...">
+    </div>
+    <div class="tienda-grid" id="tienda-grid"></div>
+  </section>
+
+  <section class="tab seccion-informatica">
+    <h2>💻 Sistema Informático</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="icono">🗄️</div>
+        <h3>Base de Datos Botánica</h3>
+        <p>Registro digital de especies medicinales con información taxonómica, usos tradicionales y contraindicaciones</p>
+        <ul>
+          <li>Taxonomía completa</li>
+          <li>Usos etnobotánicos</li>
+          <li>Contraindicaciones</li>
+          <li>Distribución geográfica</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="icono">📊</div>
+        <h3>Dashboard de Inventario</h3>
+        <p>Panel de control en tiempo real para gestionar stock de productos. Roles de administrador, vendedor y comprador.</p>
+        <ul>
+          <li>Stock en tiempo real</li>
+          <li>Alertas de bajo inventario</li>
+          <li>Control de ventas</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="icono">🔒</div>
+        <h3>Seguridad y Conectividad</h3>
+        <p>Trazabilidad de cada producto desde el campo hasta el cliente. Sistema de autenticación con sesiones y datos encriptados.</p>
+        <ul>
+          <li>Trazabilidad completa</li>
+          <li>Certificación de origen</li>
+          <li>Sesiones seguras</li>
+          <li>Perfiles con foto</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab seccion-contacto">
+    <h2>📞 Contacto</h2>
+    <div class="contacto-grid">
+      <div class="contacto-card">
+        <h3>📨 Escríbenos</h3>
+        <form id="formContacto" onsubmit="enviarContacto(event)">
+          <div class="campo">
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="campo">
+            <label>Correo electrónico</label>
+            <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+          </div>
+          <div class="campo">
+            <label>Asunto</label>
+            <select name="asunto">
+              <option>Consulta general</option>
+              <option>Pedido</option>
+              <option>Información sobre plantas</option>
+              <option>Alianza comercial</option>
+              <option>Soporte técnico</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Mensaje</label>
+            <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
+          </div>
+          <button type="submit" class="btn-enviar">📤 Enviar mensaje</button>
+        </form>
+      </div>
+      <div class="contacto-card">
+        <h3>📍 Información</h3>
+        <div class="info-contacto">
+          <p>📍 Quibdó, Chocó</p>
+          <p>📞 +57 322 261 3882</p>
+          <p>✉️ contacto@plantaschocoanas.co</p>
+          <p>🕐 Lunes a Sábado: 8:00 AM — 6:00 PM</p>
+          <p>🌐 www.plantaschocoanas.co</p>
+        </div>
+        <h3 style="margin-top:24px;">🌐 Redes Sociales</h3>
+        <div class="info-contacto">
+          <p>📘 Facebook: /PlantasMedicinalesChoco</p>
+          <p>📸 Instagram: @plantas.chocoanas</p>
+        </div>
+        <div class="mapa-choco">
+          <iframe title="Mapa del Chocó — Quibdó" src="https://maps.google.com/maps?q=Quibd%C3%B3%2C%20Choc%C3%B3%2C%20Colombia&t=&z=12&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab seccion-admin">
+    <h2>📊 Panel de Gestión</h2>
+    <div class="admin-stats" id="admin-stats"></div>
+    <div class="panel-grupo">
+      <div class="grupo-cabeza">
+        <h3>📦 Inventario y Stock</h3>
+        <button class="btn" onclick="abrirProductoModal()">＋ Nuevo producto</button>
+      </div>
+      <div class="tabla-wrap">
+        <table class="tabla">
+          <thead>
+            <tr><th>Producto</th><th>Nombre</th><th>Precio</th><th>Estado</th><th>Stock</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="tabla-productos-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel-grupo" id="panel-usuarios">
+      <div class="grupo-cabeza"><h3>👥 Usuarios Registrados</h3></div>
+      <div class="tabla-wrap">
+        <table class="tabla">
+          <thead>
+            <tr><th>Nombre</th><th>Correo</th><th>Usuario</th><th>Rol</th><th>Teléfono</th><th>Registro</th></tr>
+          </thead>
+          <tbody id="tabla-usuarios-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel-grupo">
+      <div class="grupo-cabeza"><h3>💰 Ventas</h3></div>
+      <div class="tabla-wrap">
+        <table class="tabla">
+          <thead>
+            <tr><th>#</th><th>Cliente</th><th>Total</th><th>Fecha</th><th>Detalle</th></tr>
+          </thead>
+          <tbody id="tabla-ventas-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<button class="boton-carrito" onclick="abrirCarrito()" title="Ver carrito">
+  🛒
+  <div class="carrito-badge" id="badge-carrito">0</div>
+</button>
+
+<div class="overlay-carrito" id="overlay-carrito" onclick="cerrarCarrito()"></div>
+
+<div class="carrito-panel" id="carrito-panel">
+  <div class="carrito-cabeza">
+    <h3>🛒 Mi Carrito</h3>
+    <button class="carrito-cerrar" onclick="cerrarCarrito()">✕</button>
+  </div>
+  <div class="carrito-cuerpo" id="carrito-cuerpo"></div>
+  <div class="carrito-pie" id="carrito-pie"></div>
+</div>
+
+<!-- Modal Perfil -->
+<div class="modal-overlay" id="modal-perfil">
+  <div class="modal" style="max-width:480px;">
+    <button class="modal-cerrar" onclick="cerrarPerfil()">×</button>
+    <h2>👤 Mi Perfil</h2>
+    <div class="perfil-avatar-grande" id="perfil-avatar">👤</div>
+    <div class="perfil-rol-visible" id="perfil-rol-muestra"></div>
+    <div class="campo">
+      <label>Foto de perfil</label>
+      <input type="file" id="perfil-foto-input" accept="image/*" onchange="onFotoSeleccionada(this)">
+      <button class="btn secundario" style="width:100%; margin-top:8px;" onclick="subirFotoPerfil()">📷 Cambiar foto</button>
+    </div>
+    <div class="campo">
+      <label>Nombre completo</label>
+      <input type="text" id="perfil-nombre" placeholder="Tu nombre">
+    </div>
+    <div class="campo">
+      <label>Teléfono</label>
+      <input type="tel" id="perfil-telefono" placeholder="+57 300 000 0000">
+    </div>
+    <div class="campo">
+      <label>Nueva contraseña (opcional)</label>
+      <input type="password" id="perfil-password" placeholder="Mínimo 6 caracteres">
+    </div>
+    <button class="btn" style="width:100%;" onclick="guardarPerfil()">💾 Guardar cambios</button>
+  </div>
+</div>
+
+<!-- Modal Producto (admin/vendedor) -->
+<div class="modal-overlay" id="modal-producto">
+  <div class="modal" style="max-width:520px;">
+    <button class="modal-cerrar" onclick="cerrarProductoModal()">×</button>
+    <h2 id="producto-modal-titulo">Nuevo producto</h2>
+    <div class="campo">
+      <label>Nombre *</label>
+      <input type="text" id="prod-nombre" placeholder="Ej: Té de Guaco">
+    </div>
+    <div class="campo">
+      <label>Descripción</label>
+      <textarea id="prod-descripcion" placeholder="Descripción del producto"></textarea>
+    </div>
+    <div class="campo">
+      <label>Precio (COP) *</label>
+      <input type="number" id="prod-precio" min="0" placeholder="12500">
+    </div>
+    <div class="campo">
+      <label>Precio anterior (descuento, opcional)</label>
+      <input type="number" id="prod-precio-anterior" min="0" placeholder="15000">
+    </div>
+    <div class="campo">
+      <label>Stock</label>
+      <input type="number" id="prod-stock" min="0" value="0">
+    </div>
+    <div class="campo">
+      <label>Categoría</label>
+      <input type="text" id="prod-categoria" placeholder="Infusión, Té, Gel, Jugo, Kit, Extracto...">
+    </div>
+    <div class="campo">
+      <label>Imagen (ruta)</label>
+      <input type="text" id="prod-imagen" placeholder="img/guaco.jpeg">
+    </div>
+    <button class="btn" style="width:100%;" onclick="guardarProducto()">💾 Guardar producto</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col footer-brand">
+      <div class="footer-logo">
+        <img class="top-logo" src="favicon.ico" alt="Logo Plantas Medicinales Chocoanas">
+        <span class="footer-logo-txt">Plantas Medicinales <em>Chocoanas</em></span>
+      </div>
+      <p class="footer-desc">Sabiduría ancestral del Pacífico. Biodiversidad, ciencia y tradición afrocolombiana en cada producto.</p>
+      <p class="footer-hecho">🌿 Hecho con <span class="corazon">♥</span> desde el Pacífico colombiano</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <label class="footer-link" for="tab-inicio">🏠 Inicio</label>
+      <label class="footer-link" for="tab-catalogo">📚 Catálogo</label>
+      <label class="footer-link" for="tab-venta">🛒 Tienda</label>
+      <label class="footer-link" for="tab-informatica">💻 Informática</label>
+      <label class="footer-link" for="tab-contacto">📞 Contacto</label>
+      <label class="footer-link solo-admin" for="tab-admin">📊 Panel</label>
+    </div>
+    <div class="footer-col">
+      <h4>Ayuda</h4>
+      <a class="footer-link" href="manu.html">📖 Manual de usuario</a>
+      <a class="footer-link" href="login.html">🔐 Iniciar sesión</a>
+      <a class="footer-link" href="login.html">📝 Crear cuenta</a>
+      <a class="footer-link" href="admin.html">🛠 Panel de gestión</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p class="footer-info">📍 Quibdó, Chocó — Colombia</p>
+      <p class="footer-info">✉️ hola@plantaschocoanas.co</p>
+      <p class="footer-info">📱 +57 300 000 0000</p>
+      <p class="footer-info">🕒 Lun a Sáb · 8:00 am – 6:00 pm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 — Preservando el conocimiento ancestral del Chocó</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
