@@ -19,14 +19,22 @@ const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || "";
 const MAX_UPLOAD = 5 * 1024 * 1024; // 5 MB
 
 let _sb = null;
+function normalizarSupabaseUrl(url) {
+  let u = String(url || "").trim();
+  u = u.replace(/\/rest\/v1\/?$/, ""); // quitar sufijo /rest/v1 si copiaron la API URL completa
+  u = u.replace(/\/+$/, "");           // quitar barras finales
+  return u;
+}
+
 function supabase() {
   if (!_sb) {
-    if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    const apiUrl = normalizarSupabaseUrl(SUPABASE_URL);
+    if (!apiUrl || !SUPABASE_SERVICE_KEY) {
       throw new Error(
         "Faltan variables de entorno SUPABASE_URL / SUPABASE_SERVICE_KEY. Configuralas en Site settings > Environment variables."
       );
     }
-    _sb = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+    _sb = createClient(apiUrl, SUPABASE_SERVICE_KEY, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
   }
